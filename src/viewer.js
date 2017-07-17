@@ -1,22 +1,21 @@
 const md = require('./md')
-const domify = require('domify')
 
 module.exports = (state, emitter) => {
   state.viewer = {
     text: '',
-    html: document.createElement('div')
+    html: ''
   }
 
   setInterval(() => {
     if (state.editor.text !== state.viewer.text) {
       state.viewer.text = state.editor.text
-      md(state.viewer.text, (report, htmlString) => {
+      md(state.viewer.text, (report, html) => {
         if (/warning/.test(String(report))) {
           console.warn(report)
         } else {
           console.log(report)
         }
-        state.viewer.html = domify(htmlString)
+        state.viewer.html = html
       })
       emitter.emit('render')
     }
