@@ -1,6 +1,5 @@
 const html = require('choo/html')
 const keys = require('../src/keys')
-const domify = require('domify')
 
 module.exports = (viewer, emit) => {
   return html`
@@ -14,11 +13,14 @@ module.exports = (viewer, emit) => {
           }
         }
       </style>
-      <section class="sheet ${viewer.sheet.load ? 'hide' : ''}" onload=${load}>
+      <div class="noprint button left" onclick=${page(-1)}></div>
+      <div class="noprint button right" onclick=${page(1)}></div>
+      <section
+        class="sheet noprint ${viewer.sheet.load ? 'hide' : ''}"
+        onload=${load}
+      >
       </section>
-      <section class="sheet">
-        ${domify(viewer.html)}
-      </section>
+      ${viewer.page.map(require('./page'))}
     </div>
   `
 
@@ -27,5 +29,13 @@ module.exports = (viewer, emit) => {
       width: e.clientWidth,
       height: e.clientHeight
     })
+  }
+
+  function page(delta) {
+    return (e) => {
+      emit(keys.viewer.page, {
+        number: viewer.currentPage.number + delta
+      })
+    }
   }
 }

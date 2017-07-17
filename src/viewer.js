@@ -1,10 +1,14 @@
 const md = require('./md')
 const keys = require('./keys')
+const domify = require('domify')
 
 module.exports = (state, emitter) => {
   state.viewer = {
     text: '',
-    html: '',
+    page: [],
+    currentPage: {
+      number: 0
+    },
     style: {
       scale: ''
     },
@@ -23,17 +27,43 @@ module.exports = (state, emitter) => {
   setInterval(() => {
     if (state.editor.text !== state.viewer.text) {
       state.viewer.text = state.editor.text
-      md(state.viewer.text, (report, html) => {
+      md(state.viewer.text, (report, htmlString) => {
         if (/warning/.test(String(report))) {
           console.warn(report)
         } else {
           console.log(report)
         }
-        state.viewer.html = html
+        state.viewer.page = Array
+          .from(domify(htmlString).childNodes)
+          .reduce((p, n) => {
+          if (n.tagName === 'HR') {
+            p.unshift([])
+          } else {
+            p[0].push(n)
+          }
+          return p
+        }, [[]]).reverse().map((html, i) => {
+          return {
+            html: html
+          }
+        }).map(updateCurrent)
+        emitter.emit('render')
       })
-      emitter.emit('render')
     }
   }, 500)
+
+  emitter.on(keys.viewer.page, (opt) => {
+    if (opt.number >= 0 && opt.number <= state.viewer.page.length - 1) {
+      state.viewer.currentPage = opt
+      state.viewer.page = state.viewer.page.map(updateCurrent)
+      emitter.emit('render')
+    }
+  })
+
+  function updateCurrent(v, i) {
+    v.active = state.viewer.currentPage.number === i
+    return v
+  }
 
   emitter.on(keys.viewer.load, (size) => {
     state.viewer.sheet.load = true
@@ -59,7 +89,7 @@ module.exports = (state, emitter) => {
       ) * 0.95
       const translate = [
         (a.width - s.width) / 2,
-        (a.height - s.height) / 2,
+        (a.height - s.height) / 2
       ]
       state.viewer.style.scale = String(scale)
       state.viewer.style.translate = String(translate.map(v => `${v}px`).join(','))

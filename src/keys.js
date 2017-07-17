@@ -3,7 +3,8 @@ module.exports = {
     update: 'editor:update'
   },
   viewer: {
-    load: 'viewer:load'
+    load: 'viewer:load',
+    page: 'viewer:page'
   },
   resize: 'resize'
 }

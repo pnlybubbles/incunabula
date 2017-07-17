@@ -12,7 +12,7 @@
 
   #editor {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 1;
+    z-index: 10;
   }
 
   #editor textarea {
@@ -31,10 +31,58 @@
   #viewer {
     overflow-y: hidden;
     background-color: #eee;
+    position: relative;
   }
 
   #viewer .sheet {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  #viewer .sheet.hide {
+    display: none;
+  }
+
+  #viewer .button {
+    top: 50%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    transition: 0.3s all;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  #viewer .button:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  #viewer .button::after {
+    content: '';
+    border-left: solid 1px rgba(0, 0, 0, 0.2);
+    border-top: solid 1px rgba(0, 0, 0, 0.2);
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 6px;
+    top: 45px;
+    transform: rotate(-45deg);
+  }
+
+  #viewer .button:hover::after {
+    border-left: solid 1px rgba(0, 0, 0, 0.5);
+    border-top: solid 1px rgba(0, 0, 0, 0.5);
+  }
+
+  #viewer .button.left {
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  #viewer .button.right {
+    right: 0;
+    transform: translate(50%, -50%) rotate(180deg);
   }
 }
 
@@ -47,12 +95,8 @@
   box-sizing: border-box;
 }
 
-#viewer .sheet.hide {
-  display: none;
-}
-
 @media print {
-  #editor {
+  .noprint {
     display: none;
   }
 }
