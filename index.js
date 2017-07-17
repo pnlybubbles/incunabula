@@ -7,7 +7,7 @@ document.querySelector('#editor textarea').value = require('./src/dummy')
 let prevText = ''
 setInterval(() => {
   const text = document.querySelector('#editor textarea').value
-  if (prevText != text) {
+  if (prevText !== text) {
     prevText = text
     md(text, (report, html) => {
       console.warn(report)

@@ -8,8 +8,8 @@ const translate = (str, cb) => {
     .use(recommended)
     .use(html)
     .process(str, (err, file) => {
-    cb(report(err || file), String(file))
-  })
+      cb(report(err || file), String(file))
+    })
 }
 
 module.exports = translate

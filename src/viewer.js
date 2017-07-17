@@ -1,4 +1,5 @@
 const vivliostyle = require('vivliostyle')
+const Blob = window.Blob
 
 const viewer = (elm) => {
   const viewer = new vivliostyle.viewer.Viewer({
@@ -17,8 +18,6 @@ const viewer = (elm) => {
     ))
     viewer.loadDocument({
       url: url,
-      startPage: undefined,
-      skipPagesBefore: undefined,
     }, {
       userStyleSheet: [{
         text: '@page {size: ' + 'B5' + '}'
