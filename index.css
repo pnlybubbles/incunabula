@@ -29,13 +29,12 @@
   }
 
   #viewer {
-    overflow-y: scroll;
+    overflow-y: hidden;
     background-color: #eee;
   }
 
   #viewer .sheet {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    transform: scale(0.5);
   }
 }
 
@@ -46,6 +45,10 @@
   page-break-after: always;
   padding: 60px;
   box-sizing: border-box;
+}
+
+#viewer .sheet.hide {
+  display: none;
 }
 
 @media print {
