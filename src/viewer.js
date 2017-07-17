@@ -1,31 +1,24 @@
-const vivliostyle = require('vivliostyle')
-const Blob = window.Blob
+const md = require('./md')
+const domify = require('domify')
 
-const viewer = (elm) => {
-  const viewer = new vivliostyle.viewer.Viewer({
-    userAgentRootURL: 'node_modules/vivliostyle/resources/',
-    viewportElement: elm,
-    debug: true
-  })
-  return (body) => {
-    const url = window.URL.createObjectURL(new Blob(
-      [
-        `<html>
-          <body>${body}</body>
-        </html>`
-      ],
-      { type: 'text/html' }
-    ))
-    viewer.loadDocument({
-      url: url,
-    }, {
-      userStyleSheet: [{
-        text: '@page {size: ' + 'B5' + '}'
-      }]
-    }, {
-      fitToScreen: true
-    })
+module.exports = (state, emitter) => {
+  state.viewer = {
+    text: '',
+    html: document.createElement('div')
   }
-}
 
-module.exports = viewer
+  setInterval(() => {
+    if (state.editor.text !== state.viewer.text) {
+      state.viewer.text = state.editor.text
+      md(state.viewer.text, (report, htmlString) => {
+        if (/warning/.test(String(report))) {
+          console.warn(report)
+        } else {
+          console.log(report)
+        }
+        state.viewer.html = domify(htmlString)
+      })
+      emitter.emit('render')
+    }
+  }, 500)
+}

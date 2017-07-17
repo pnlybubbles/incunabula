@@ -1,16 +1,12 @@
-html, body {
-  height: 100%;
-}
-
 body {
   margin: 0;
   display: flex;
+  overflow: hidden;
 }
 
 .main {
-  width: 50%;
-  height: 100%;
-  overflow: hidden;
+  width: 50vw;
+  height: 100vh;
 }
 
 #editor textarea {
@@ -24,4 +20,14 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   resize: none;
   background-color: #eee;
+}
+
+#viewer {
+  overflow-y: scroll;
+  box-sizing: border-box;
+  padding: 60px;
+}
+
+#viewer .container {
+  overflow: scroll;
 }

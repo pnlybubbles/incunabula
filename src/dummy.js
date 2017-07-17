@@ -6,16 +6,25 @@ this is content
 
 ### decorations
 
-- item1
-- item2
+-   item1
+-   item2
+-   item3
 
-this is **bold** and *italic* and ~~striked~~ and \`inline code\`.
+this is **bold**
+and *italic*
+and ~~striked~~
+and \`inline code\`
+and $I_s \\sim O_s$
 
 \`\`\`
 function () {
   console.log('hello');
 }
 \`\`\`
+
+$$
+L = \\frac{1}{2} \\rho v^2 S C_L
+$$
 
 ### long text
 

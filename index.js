@@ -1,17 +1,15 @@
 const viewer = require('./src/viewer')
 const md = require('./src/md')
+const log = require('choo-log')
+const choo = require('choo')
 
-const renderer = viewer(document.querySelector('#viewer'))
-document.querySelector('#editor textarea').value = require('./src/dummy')
+const app = choo()
 
-let prevText = ''
-setInterval(() => {
-  const text = document.querySelector('#editor textarea').value
-  if (prevText !== text) {
-    prevText = text
-    md(text, (report, html) => {
-      console.warn(report)
-      renderer(html)
-    })
-  }
-}, 1000)
+app.use(log())
+app.use(require('./src/editor'))
+app.use(require('./src/viewer'))
+
+app.route('/', require('./view/main'))
+
+app.mount('body')
+
