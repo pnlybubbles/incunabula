@@ -36,17 +36,17 @@ module.exports = (state, emitter) => {
         state.viewer.page = Array
           .from(domify(htmlString).childNodes)
           .reduce((p, n) => {
-          if (n.tagName === 'HR') {
-            p.unshift([])
-          } else {
-            p[0].push(n)
-          }
-          return p
-        }, [[]]).reverse().map((html, i) => {
-          return {
-            html: html
-          }
-        }).map(updateCurrent)
+            if (n.tagName === 'HR') {
+              p.unshift([])
+            } else {
+              p[0].push(n)
+            }
+            return p
+          }, [[]]).reverse().map((html, i) => {
+            return {
+              html: html
+            }
+          }).map(updateCurrent)
         emitter.emit('render')
       })
     }
@@ -60,7 +60,7 @@ module.exports = (state, emitter) => {
     }
   })
 
-  function updateCurrent(v, i) {
+  function updateCurrent (v, i) {
     v.active = state.viewer.currentPage.number === i
     return v
   }

@@ -31,7 +31,7 @@ module.exports = (viewer, emit) => {
     })
   }
 
-  function page(delta) {
+  function page (delta) {
     return (e) => {
       emit(keys.viewer.page, {
         number: viewer.currentPage.number + delta
