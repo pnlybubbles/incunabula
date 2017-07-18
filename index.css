@@ -84,6 +84,25 @@
     right: 0;
     transform: translate(50%, -50%) rotate(180deg);
   }
+
+  #viewer .page-number {
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    transform: translate(-50%, 0);
+    z-index: 2;
+    padding: 6px 14px;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+    transition: 0.3s all;
+    cursor: default;
+  }
+
+  #viewer .page-number:hover {
+    opacity: 0;
+  }
 }
 
 #viewer .sheet {

@@ -15,6 +15,7 @@ module.exports = (viewer, emit) => {
       </style>
       <div class="noprint button left" onclick=${page(-1)}></div>
       <div class="noprint button right" onclick=${page(1)}></div>
+      <div class="page-number">${viewer.currentPage.number}</div>
       <section
         class="sheet noprint ${viewer.sheet.load ? 'hide' : ''}"
         onload=${load}
