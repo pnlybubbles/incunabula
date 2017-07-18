@@ -8,9 +8,7 @@ module.exports = (editor, emit) => {
         oninput=${updateText}
         onkeyup=${moveCursor}
         onmouseup=${moveCursor}
-      >
-        ${editor.text}
-      </textarea>
+      >${editor.text}</textarea>
     </div>
   `
 
