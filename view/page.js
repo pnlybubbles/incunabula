@@ -1,8 +1,8 @@
 const html = require('choo/html')
 
-module.exports = (page, emit) => {
+module.exports = (page, isCurrentPage, emit) => {
   return html`
-    <section class="sheet ${page.active ? '' : 'hide'}">
+    <section class="sheet ${isCurrentPage ? '' : 'hide'}">
       ${page.html}
     </section>
   `

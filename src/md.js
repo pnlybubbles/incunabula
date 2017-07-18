@@ -5,9 +5,11 @@ const math = require('remark-math')
 const remark2rehype = require('remark-rehype')
 const katex = require('rehype-katex')
 const stringify = require('rehype-stringify')
+const pageBreak = require('./page-break')
 
 const processor = remark()
   .use(recommended)
+  .use(pageBreak)
   .use(math)
   .use(remark2rehype)
   .use(katex)
@@ -15,7 +17,7 @@ const processor = remark()
 
 const translator = (str, cb) => {
   processor.process(str, (err, file) => {
-    cb(report(err || file), String(file))
+    cb(report(err || file), String(file), file.data)
   })
 }
 

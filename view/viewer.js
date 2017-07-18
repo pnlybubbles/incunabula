@@ -20,7 +20,9 @@ module.exports = (viewer, emit) => {
         onload=${load}
       >
       </section>
-      ${viewer.page.map(require('./page'))}
+      ${viewer.page.map((v, i) => {
+        return require('./page')(v, viewer.currentPage.number === i, emit)
+      })}
     </div>
   `
 

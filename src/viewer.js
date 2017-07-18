@@ -5,7 +5,8 @@ const domify = require('domify')
 module.exports = (state, emitter) => {
   state.viewer = {
     text: '',
-    page: [],
+    page: [], // [{ html: [HTMLElement] }]
+    pageBreak: [], // [{ line: number }]
     currentPage: {
       number: 0
     },
@@ -27,12 +28,17 @@ module.exports = (state, emitter) => {
   setInterval(() => {
     if (state.editor.text !== state.viewer.text) {
       state.viewer.text = state.editor.text
-      md(state.viewer.text, (report, htmlString) => {
+      md(state.viewer.text, (report, htmlString, data) => {
         if (/warning/.test(String(report))) {
           console.warn(report)
         } else {
           console.log(report)
         }
+        state.viewer.pageBreak = data.pageBreak
+        state.viewer.currentPage.number = getPageFromLine(
+          data.pageBreak.map(v => v.line),
+          state.editor.cursor.line
+        )
         state.viewer.page = Array
           .from(domify(htmlString).childNodes)
           .reduce((p, n) => {
@@ -46,24 +52,32 @@ module.exports = (state, emitter) => {
             return {
               html: html
             }
-          }).map(updateCurrent)
+          })
         emitter.emit('render')
       })
     }
   }, 500)
 
+  emitter.on(keys.viewer.syncPage, (cursor) => {
+    state.viewer.currentPage.number = getPageFromLine(
+      state.viewer.pageBreak.map(v => v.line),
+      cursor.line
+    )
+    emitter.emit('render')
+  })
+
+  function getPageFromLine (pageBreakLineList, currentLine) {
+    return pageBreakLineList.reduce((p, c, i) => {
+      return c < currentLine ? i + 1 : p
+    }, 0)
+  }
+
   emitter.on(keys.viewer.page, (opt) => {
     if (opt.number >= 0 && opt.number <= state.viewer.page.length - 1) {
-      state.viewer.currentPage = opt
-      state.viewer.page = state.viewer.page.map(updateCurrent)
+      state.viewer.currentPage.number = opt.number
       emitter.emit('render')
     }
   })
-
-  function updateCurrent (v, i) {
-    v.active = state.viewer.currentPage.number === i
-    return v
-  }
 
   emitter.on(keys.viewer.load, (size) => {
     state.viewer.sheet.load = true

@@ -6,15 +6,17 @@ function attacher () {
   return transformer
 
   function transformer (tree, file) {
+    file.data.pageBreak = file.data.pageBreak || []
     visit(tree, 'thematicBreak', visitor)
 
     function visitor (node, i, parent) {
-      console.log(node)
-      console.log(parent)
-      parent.children[i] = {
-        type: 'html',
-        value: '<div class="page-break"></div>'
-      }
+      file.data.pageBreak.push({
+        line: node.position.start.line
+      })
+      // parent.children[i] = {
+      //   type: 'html',
+      //   value: '<div class="page-break"></div>'
+      // }
     }
   }
 }

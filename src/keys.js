@@ -1,10 +1,12 @@
 module.exports = {
   editor: {
-    update: 'editor:update'
+    update: 'editor:update',
+    cursor: 'editor:cursor'
   },
   viewer: {
     load: 'viewer:load',
-    page: 'viewer:page'
+    page: 'viewer:page',
+    syncPage: 'viewer:sync-page'
   },
   resize: 'resize'
 }
