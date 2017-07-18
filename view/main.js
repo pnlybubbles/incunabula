@@ -4,8 +4,13 @@ const keys = require('../src/keys')
 module.exports = (state, emit) => {
   return html`
     <body onresize=${resize} onload=${resize}>
-      ${require('./editor')(state.editor, emit)}
-      ${require('./viewer')(state.viewer, emit)}
+      <div id="split">
+        ${require('./editor')(state.editor, emit)}
+        ${require('./viewer')(state.viewer, emit)}
+      </div>
+      <div id="overlay">
+        ${require('./report')(state.viewer.report, emit)}
+      </div>
     </body>
   `
 

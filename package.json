@@ -4,6 +4,7 @@
     "choo": "^5.6.2",
     "choo-log": "^7.1.0",
     "domify": "^1.4.0",
+    "font-awesome": "^4.7.0",
     "katex": "^0.7.1",
     "rehype-katex": "^1.0.1",
     "rehype-stringify": "^3.0.0",

@@ -22,7 +22,8 @@ module.exports = (state, emitter) => {
       load: false,
       width: 0,
       height: 0
-    }
+    },
+    report: ''
   }
 
   setInterval(() => {
@@ -34,6 +35,7 @@ module.exports = (state, emitter) => {
         } else {
           console.log(report)
         }
+        state.viewer.report = String(report)
         state.viewer.pageBreak = data.pageBreak
         state.viewer.currentPage.number = getPageFromLine(
           data.pageBreak.map(v => v.line),
