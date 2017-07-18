@@ -4,7 +4,13 @@ const keys = require('../src/keys')
 module.exports = (editor, emit) => {
   return html`
     <div id="editor" class="main noprint">
-      <textarea oninput=${updateText} onkeyup=${moveCursor}>${editor.text}</textarea>
+      <textarea
+        oninput=${updateText}
+        onkeyup=${moveCursor}
+        onmouseup=${moveCursor}
+      >
+        ${editor.text}
+      </textarea>
     </div>
   `
 
