@@ -74,6 +74,7 @@ module.exports = (state, emitter) => {
   })
 
   emitter.on(keys.file.save, async () => {
+    // TODO: path is empty, create new with filename
     try {
       const currentFile = state.file.list[state.file.current]
       let exist = true

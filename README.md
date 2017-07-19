@@ -2,7 +2,7 @@
 
 [![js-standard-style][0]][1]
 
-Tools for writing for printing
+Tools for writing for printing. Currently supporting darwin and linux.
 
 ## Features
 
@@ -19,7 +19,6 @@ Tools for writing for printing
 - [ ] Cover
 - [ ] Content hierarchy for editor
 - [ ] Custom syntax for markdown (based on `remark`)
-- [ ] Electron app
 
 ## Developing
 

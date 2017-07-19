@@ -1,4 +1,6 @@
 {
+  "name": "Incunabula",
+  "version": "0.1.0",
   "license": "MIT",
   "dependencies": {
     "choo": "^5.6.2",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "budo": "^10.0.3",
+    "electron-packager": "^8.7.2",
     "electron-prebuilt": "^1.4.13",
     "standard": "^10.0.2"
   },
@@ -28,6 +31,7 @@
   "scripts": {
     "start": "electron --js-flags='--harmony' .",
     "server": "budo index.js -lP -d .",
+    "build": "electron-packager . --platform=darwin,linux --arch=x64",
     "test": "standard"
   }
 }
