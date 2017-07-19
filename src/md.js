@@ -17,7 +17,12 @@ const processor = remark()
 
 const translator = (str, cb) => {
   processor.process(str, (err, file) => {
-    cb(report(err || file), String(file), file.data)
+    cb(
+      // on electron, text decorator (like '[33m') will be revealed
+      report(err || file).replace(/\[\d+m/g, ''),
+      String(file),
+      file.data
+    )
   })
 }
 

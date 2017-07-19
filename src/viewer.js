@@ -30,12 +30,12 @@ module.exports = (state, emitter) => {
     if (state.editor.text !== state.viewer.text) {
       state.viewer.text = state.editor.text
       md(state.viewer.text, (report, htmlString, data) => {
-        if (/warning/.test(String(report))) {
+        if (/warning/.test(report)) {
           console.warn(report)
         } else {
           console.log(report)
         }
-        state.viewer.report = String(report)
+        state.viewer.report = report
         state.viewer.pageBreak = data.pageBreak
         state.viewer.currentPage.number = getPageFromLine(
           data.pageBreak.map(v => v.line),
