@@ -5,8 +5,6 @@ const open = (() => {
   if (isElectron) {
     const { remote } = require('electron')
     const { dialog } = remote
-    const fs = remote.require('fs')
-    const readFile = pify(fs.readFile)
     const showOpenDialog = () => new Promise((resolve, reject) => {
       dialog.showOpenDialog({
         properties: ['openFile'],
@@ -18,7 +16,7 @@ const open = (() => {
         if (files) {
           resolve(files)
         } else {
-          reject('no dialog')
+          reject(new Error('Canceled'))
         }
       })
     })
@@ -27,7 +25,7 @@ const open = (() => {
       let files = []
       try {
         files = await showOpenDialog()
-      } catch(e) {
+      } catch (e) {
         return []
       }
       const docs = []
@@ -69,7 +67,7 @@ const write = (() => {
     const writeFile = pify(fs.writeFile)
 
     return async (path, content) => {
-      return await writeFile(path, content)
+      return writeFile(path, content)
     }
   } else {
     return (path, content) => {
@@ -85,7 +83,7 @@ const check = (() => {
     const access = pify(fs.access)
 
     return async (path) => {
-      return await access(path, fs.constants.R_OK | fs.constants.W_OK)
+      return access(path, fs.constants.R_OK | fs.constants.W_OK)
     }
   } else {
     return (path) => {

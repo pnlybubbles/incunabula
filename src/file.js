@@ -35,8 +35,8 @@ module.exports = (state, emitter) => {
     try {
       docs = await fileio.open()
     } catch (e) {
-      alert(String(e))
-      console.error(e);
+      window.alert(String(e))
+      console.error(e)
     }
     docs.forEach((doc) => {
       const item = state.file.list.find(v => v.path === doc.path)
@@ -78,7 +78,7 @@ module.exports = (state, emitter) => {
       const currentFile = state.file.list[state.file.current]
       let exist = true
       try {
-        access = await fileio.check(currentFile.path)
+        await fileio.check(currentFile.path)
         exist = true
       } catch (e) {
         if (e.code === 'ENOENT') {
@@ -87,7 +87,7 @@ module.exports = (state, emitter) => {
           throw e
         }
       }
-      let latestLoadContent = '';
+      let latestLoadContent = ''
       if (exist) {
         latestLoadContent = await fileio.read(currentFile.path)
       } else {
@@ -98,7 +98,7 @@ module.exports = (state, emitter) => {
       if (latestLoadContent !== currentFile.lastLoad) {
         // latest content is not matched with the loaded item
         // suppose: item has been updated with the other editors before save changes
-        console.info(`File (${currentFile.path}) is not match to last loaded content. Probably the file has been updated with the other editors.`);
+        console.info(`File (${currentFile.path}) is not match to last loaded content. Probably the file has been updated with the other editors.`)
         if (window.confirm('This file is probably updated with the another application.\nOverwrite changes?')) {
           await fileio.write(currentFile.path, currentFile.content)
           currentFile.lastLoad = currentFile.content
@@ -110,13 +110,13 @@ module.exports = (state, emitter) => {
         }
       } else {
         // consistent: latest content is same as last loaded item
-        console.info(`Save file (${currentFile.path})`);
+        console.info(`Save file (${currentFile.path})`)
         await fileio.write(currentFile.path, currentFile.content)
         currentFile.lastLoad = currentFile.content
       }
     } catch (e) {
-      alert(String(e))
-      console.error(e);
+      window.alert(String(e))
+      console.error(e)
     }
   })
 
