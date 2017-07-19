@@ -4,7 +4,11 @@ const localStorage = window.localStorage
 
 module.exports = (state, emitter) => {
   state.file = {
-    list: [], // { content: string, lastLoad: string, path: string }
+    list: [{
+      content: '',
+      lastLoad: '',
+      path: ''
+    }], // { content: string, lastLoad: string, path: string }
     cached: true,
     current: 0
   }
@@ -31,6 +35,16 @@ module.exports = (state, emitter) => {
   })
 
   emitter.on(keys.file.open, async () => {
+    // TODO: support multiple files
+    // temporary check unsaved current buffer
+    const currentFile = state.file.list[state.file.current]
+    if (currentFile.content !== currentFile.lastLoad) {
+      // unsaved
+      console.info(`File (${currentFile.path}) is not saved, but operating to open new file.`)
+      if (window.confirm('Do you want to save the current changes?\nYour changes will be lost if you don\'t save them.')) {
+        emitter.emit(keys.file.save)
+      }
+    }
     let docs = []
     try {
       docs = await fileio.open()
@@ -62,11 +76,17 @@ module.exports = (state, emitter) => {
       } else {
         // new file
         console.info(`Load file (${doc.path})`)
-        state.file.list.push({
+        // TODO: support multiple files
+        // state.file.list.push({
+        //   content: doc.content,
+        //   lastLoad: doc.content,
+        //   path: doc.path
+        // })
+        state.file.list[state.file.current] = {
           content: doc.content,
           lastLoad: doc.content,
           path: doc.path
-        })
+        }
         applyCurrentToEditor()
         cache()
       }
@@ -75,8 +95,14 @@ module.exports = (state, emitter) => {
 
   emitter.on(keys.file.save, async () => {
     // TODO: path is empty, create new with filename
+    const currentFile = state.file.list[state.file.current]
+    if (!currentFile.path) {
+      // TODO: open dialog to select location and filename
+      console.info(`New file`)
+      window.alert('Creating a new file is not supported yet :(')
+      throw new Error('Not supported')
+    }
     try {
-      const currentFile = state.file.list[state.file.current]
       let exist = true
       try {
         await fileio.check(currentFile.path)
