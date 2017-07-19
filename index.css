@@ -17,31 +17,32 @@
     position: absolute;
   }
 
-  #overlay .report {
-    bottom: 7px;
+  #overlay .floating {
+    bottom: 10px;
     left: calc(50vw - 65px);
   }
 
-  #overlay .report input {
+  #overlay .floating input {
     display: none;
   }
 
-  #overlay .report label {
+  #overlay .floating .button {
     display: block;
     border-radius: 5px;
     border: solid 1px rgba(0, 0, 0, 0);
     color: rgba(0, 0, 0, 0.2);
     transition: 0.3s all;
-    padding: 10px 15px;
+    padding: 10px 15px 6px;
+    cursor: pointer;
   }
 
-  #overlay .report label:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+  #overlay .floating .button:hover {
+    background-color: rgba(250, 250, 250, 0.9);
     border-color: rgba(0, 0, 0, 0.1);
     color: rgba(0, 0, 0, 0.5);
   }
 
-  #overlay .report input:checked + .tooltip {
+  #overlay .floating input:checked + .tooltip {
     visibility: visible;
     opacity: 1;
   }
@@ -93,6 +94,11 @@
     margin: 15px 20px 15px;
   }
 
+  #overlay .file {
+    bottom: 7px;
+    left: calc(50vw - 120px);
+  }
+
   .main {
     width: 50vw;
     height: 100vh;
@@ -120,6 +126,7 @@
     overflow-y: hidden;
     background-color: #eee;
     position: relative;
+    z-index: 9;
   }
 
   #viewer .sheet {

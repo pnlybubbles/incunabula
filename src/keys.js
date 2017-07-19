@@ -8,5 +8,10 @@ module.exports = {
     page: 'viewer:page',
     syncPage: 'viewer:sync-page'
   },
-  resize: 'resize'
+  resize: 'resize',
+  file: {
+    open: 'file:open',
+    update: 'file:update',
+    hotReload: 'file:hot-reload'
+  }
 }

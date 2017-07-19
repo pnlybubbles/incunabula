@@ -6,6 +6,7 @@ const app = choo()
 app.use(log())
 app.use(require('./src/editor'))
 app.use(require('./src/viewer'))
+app.use(require('./src/file'))
 
 app.route('/', require('./view/main'))
 

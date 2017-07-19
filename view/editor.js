@@ -14,6 +14,7 @@ module.exports = (editor, emit) => {
 
   function updateText (e) {
     emit(keys.editor.update, e.target.value)
+    emit(keys.file.update, e.target.value)
   }
 
   function moveCursor (e) {
