@@ -8,7 +8,7 @@ module.exports = (state, emit) => {
         ${require('./editor')(state.editor, emit)}
         ${require('./viewer')(state.viewer, emit)}
       </div>
-      <div id="overlay">
+      <div class="noprint" id="overlay">
         ${require('./report')(state.viewer.report, emit)}
       </div>
     </body>

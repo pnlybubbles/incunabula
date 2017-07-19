@@ -1,8 +1,4 @@
 @media screen {
-  body {
-    margin: 0;
-  }
-
   #split {
     display: flex;
     overflow: hidden;
@@ -197,6 +193,10 @@
   }
 }
 
+body {
+  font-family: sans-serif;
+}
+
 #viewer .sheet {
   background-color: #fff;
   height: 257mm;
@@ -204,6 +204,7 @@
   page-break-after: always;
   padding: 60px;
   box-sizing: border-box;
+  line-height: 1.5;
 }
 
 @media print {
