@@ -11,6 +11,7 @@ module.exports = {
   resize: 'resize',
   file: {
     open: 'file:open',
+    save: 'file:save',
     update: 'file:update',
     hotReload: 'file:hot-reload'
   }

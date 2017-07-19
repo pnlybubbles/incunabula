@@ -17,11 +17,6 @@
     position: absolute;
   }
 
-  #overlay .floating {
-    bottom: 10px;
-    left: calc(50vw - 65px);
-  }
-
   #overlay .floating input {
     display: none;
   }
@@ -94,9 +89,19 @@
     margin: 15px 20px 15px;
   }
 
+  #overlay .report {
+    bottom: 10px;
+    left: calc(50vw - 65px);
+  }
+
   #overlay .file {
     bottom: 7px;
     left: calc(50vw - 120px);
+  }
+
+  #overlay .save {
+    bottom: 7px;
+    left: calc(50vw - 175px);
   }
 
   .main {

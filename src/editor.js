@@ -10,7 +10,6 @@ module.exports = (state, emitter) => {
 
   emitter.on(keys.editor.update, (text) => {
     state.editor.text = text
-    console.log(text)
     emitter.emit('render')
   })
 
