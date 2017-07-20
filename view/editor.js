@@ -4,6 +4,7 @@ const keys = require('../src/keys')
 module.exports = (editor, emit) => {
   return html`
     <div id="editor" class="main noprint">
+      <div class="titlebar-gradient"></div>
       <textarea
         oninput=${updateText}
         onkeyup=${moveCursor}
