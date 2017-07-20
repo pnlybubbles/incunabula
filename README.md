@@ -2,7 +2,7 @@
 
 [![js-standard-style][0]][1]
 
-Tools for writing for printing. Currently supporting macos and linux.
+Tools for writing for printing. Currently supporting macOS.
 
 ## Features
 
@@ -19,6 +19,7 @@ Tools for writing for printing. Currently supporting macos and linux.
 - [ ] Cover
 - [ ] Content hierarchy for editor
 - [ ] Custom syntax for markdown (based on `remark`)
+- [ ] Support many printing format
 
 ## Developing
 
@@ -31,7 +32,7 @@ $ npm start
 
 ## Packaging
 
-Create an executable binary for macos and linux.
+Create an executable binary for macOS.
 
 ```
 $ npm build
