@@ -111,7 +111,7 @@ module.exports = (state, emitter) => {
       const opt = {
         landscape: false,
         marginsType: 0,
-        printBackground: false,
+        printBackground: true,
         printSelectionOnly: false,
         pageSize: {
           height: 257000,

@@ -138,11 +138,13 @@
     outline: none;
     font-size: 18px;
     line-height: 1.3;
+    letter-spacing: 0.05em;
     box-sizing: border-box;
     padding: 40px var(--editor-padding) var(--editor-padding) var(--editor-padding);
     resize: none;
     background-color: #fff;
     color: #555;
+    font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
   }
 
   #editor .titlebar-gradient {
@@ -162,7 +164,7 @@
 
   #viewer {
     -webkit-app-region: drag;
-    overflow-y: hidden;
+    overflow: hidden;
     background-color: #eee;
     position: relative;
     z-index: 9;
@@ -236,6 +238,7 @@
     font-weight: bold;
     transition: 0.3s all;
     cursor: default;
+    -webkit-user-select: none;
   }
 
   #viewer .page-number:hover {
@@ -244,7 +247,7 @@
 }
 
 body {
-  font-family: sans-serif;
+  font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
 }
 
 #viewer .sheet {
@@ -255,6 +258,8 @@ body {
   padding: 60px;
   box-sizing: border-box;
   line-height: 1.5;
+  letter-spacing: 0.05em;
+  font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
 }
 
 @media print {
