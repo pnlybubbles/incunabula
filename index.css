@@ -109,6 +109,11 @@
     left: calc(50vw - 230px);
   }
 
+  #overlay .new {
+    bottom: 7px;
+    left: calc(50vw - 285px);
+  }
+
   .main {
     width: 50vw;
     height: 100vh;

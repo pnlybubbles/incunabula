@@ -13,6 +13,7 @@ module.exports = (state, emit) => {
         ${require('./export')(state.file, emit)}
         ${require('./file')(state.file, emit)}
         ${require('./save')(state.file, emit)}
+        ${require('./new')(state.file, emit)}
       </div>
     </body>
   `

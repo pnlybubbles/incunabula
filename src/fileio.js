@@ -18,12 +18,7 @@ const open = (() => {
     })
 
     return async (opt) => {
-      let files = []
-      try {
-        files = await showOpenDialog(opt)
-      } catch (e) {
-        return []
-      }
+      const files = await showOpenDialog(opt)
       const docs = []
       for (let path of files) {
         docs.push({

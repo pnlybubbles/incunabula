@@ -14,6 +14,7 @@ module.exports = {
     save: 'file:save',
     update: 'file:update',
     export: 'file:export',
+    new: 'file:new',
     hotReload: 'file:hot-reload'
   }
 }
