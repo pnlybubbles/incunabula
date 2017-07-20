@@ -140,6 +140,7 @@ function createMenu () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+  app.commandLine.appendSwitch('js-flags', '--harmony')
   createMenu()
   createWindow()
 })

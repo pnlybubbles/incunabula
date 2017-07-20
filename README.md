@@ -25,8 +25,8 @@ Tools for writing for printing. Currently supporting macos and linux.
 Start a local server at `localhost:9966`.
 
 ```
-$ yarn
-$ yarn start
+$ npm
+$ npm start
 ```
 
 ## Packaging
@@ -34,7 +34,7 @@ $ yarn start
 Create an executable binary for macos and linux.
 
 ```
-$ yarn build
+$ npm build
 ```
 
 ## Screenshot
