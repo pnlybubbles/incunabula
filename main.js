@@ -1,7 +1,10 @@
 // https://electron.atom.io/docs/tutorial/quick-start/
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, Menu, shell} = require('electron')
+const defaultMenu = require('electron-default-menu')
+const { updateMenu, getMenu } = require('./src/menu-util')
 const path = require('path')
 const url = require('url')
+const keys = require('./src/keys')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,8 +21,10 @@ function createWindow () {
     slashes: true
   }))
 
+  const menuFile = getMenu(menu, 'file')
+
   // Open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -27,13 +32,117 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     win = null
+
+    updateMenu(['file:save'], menuFile, {
+      enabled: false
+    })
+
+    updateMenu(['file:export'], menuFile, {
+      enabled: false
+    })
   })
+
+  win.webContents.on('did-finish-load', () => {
+    updateMenu(['file:save'], menuFile, {
+      enabled: true
+    })
+
+    updateMenu(['file:export'], menuFile, {
+      enabled: true
+    })
+  })
+}
+
+let menu
+
+function createMenu () {
+  // Create the application menu.
+  const menuTemplate = defaultMenu(app, shell)
+
+  menuTemplate.find(v => v.label === 'Help').submenu.push({
+    label: 'Website',
+    click: () => shell.openExternal('https://github.com/pnlybubbles/incunabula')
+  })
+
+  menuTemplate.splice(1, 0, {
+    label: 'File',
+    id: 'file',
+    submenu: [
+      {
+        label: 'New File',
+        accelerator: 'CmdOrCtrl+N',
+        enabled: true,
+        click: () => {
+          if (win && !win.webContents.isLoading()) {
+            win.webContents.send(keys.file.new)
+          } else {
+            createWindow()
+            win.webContents.on('did-finish-load', () => {
+              win.webContents.send(keys.file.new)
+            })
+          }
+        },
+        id: 'file:new'
+      },
+      {
+        label: 'Open',
+        accelerator: 'CmdOrCtrl+O',
+        enabled: true,
+        click: () => {
+          if (win && !win.webContents.isLoading()) {
+            win.webContents.send(keys.file.open)
+          } else {
+            createWindow()
+            win.webContents.on('did-finish-load', () => {
+              win.webContents.send(keys.file.open)
+            })
+          }
+        },
+        id: 'file:open'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Save',
+        accelerator: 'CmdOrCtrl+S',
+        enabled: false,
+        click: () => {
+          if (win && !win.webContents.isLoading()) {
+            win.webContents.send(keys.file.save)
+          }
+        },
+        id: 'file:save'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Export PDF...',
+        accelerator: 'CmdOrCtrl+Alt+P',
+        enabled: false,
+        click: () => {
+          if (win && !win.webContents.isLoading()) {
+            win.webContents.send(keys.file.export)
+          }
+        },
+        id: 'file:export'
+      }
+    ]
+  })
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate))
+
+  menu = Menu.getApplicationMenu()
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createMenu()
+  createWindow()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

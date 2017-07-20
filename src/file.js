@@ -125,7 +125,7 @@ module.exports = (state, emitter) => {
         name: currentFilePath.name,
         ext: '.pdf'
       })
-      console.log(defaultPath);
+      console.log(defaultPath)
       await fileio.save(data, {
         defaultPath: defaultPath,
         buttonLabel: 'Export',
@@ -173,14 +173,14 @@ module.exports = (state, emitter) => {
     state.file.cached = true
   }
 
-  function error(e) {
+  function error (e) {
     if (e.message !== 'Canceled') {
       window.alert(String(e))
-      console.error(e);
+      console.error(e)
     }
   }
 
-  async function save() {
+  async function save () {
     const currentFile = state.file.list[state.file.current]
     if (!currentFile.path) {
       // path is empty, create new
