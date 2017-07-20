@@ -10,6 +10,7 @@ module.exports = (state, emit) => {
       </div>
       <div class="noprint" id="overlay">
         ${require('./report')(state.viewer.report, emit)}
+        ${require('./export')(state.file, emit)}
         ${require('./file')(state.file, emit)}
         ${require('./save')(state.file, emit)}
       </div>

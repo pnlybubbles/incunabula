@@ -1,5 +1,6 @@
 const keys = require('./keys')
 const fileio = require('./fileio')
+const path = require('path')
 const localStorage = window.localStorage
 
 module.exports = (state, emitter) => {
@@ -47,7 +48,12 @@ module.exports = (state, emitter) => {
     }
     let docs = []
     try {
-      docs = await fileio.open()
+      docs = await fileio.open({
+        filters: [
+          { name: 'Markdown', extensions: ['md'] },
+          { name: 'Text', extensions: ['txt'] }
+        ]
+      })
     } catch (e) {
       window.alert(String(e))
       console.error(e)
@@ -94,26 +100,27 @@ module.exports = (state, emitter) => {
   })
 
   emitter.on(keys.file.save, async () => {
-    // TODO: path is empty, create new with filename
     const currentFile = state.file.list[state.file.current]
     if (!currentFile.path) {
-      // TODO: open dialog to select location and filename
+      // path is empty, create new
       console.info(`New file`)
-      window.alert('Creating a new file is not supported yet :(')
-      throw new Error('Not supported')
-    }
-    try {
-      let exist = true
       try {
-        await fileio.check(currentFile.path)
-        exist = true
+        const newPath = await fileio.save(currentFile.content, {
+          filters: [
+            { name: 'Markdown', extensions: ['md'] }
+          ]
+        })
+        currentFile.path = newPath
+        currentFile.lastLoad = currentFile.content
       } catch (e) {
-        if (e.code === 'ENOENT') {
-          exist = false
-        } else {
-          throw e
+        if (e.message !== 'Canceled') {
+          window.alert(e)
         }
       }
+      return
+    }
+    try {
+      const exist = await fileio.check(currentFile.path)
       let latestLoadContent = ''
       if (exist) {
         latestLoadContent = await fileio.read(currentFile.path)
@@ -140,6 +147,46 @@ module.exports = (state, emitter) => {
         console.info(`Save file (${currentFile.path})`)
         await fileio.write(currentFile.path, currentFile.content)
         currentFile.lastLoad = currentFile.content
+      }
+    } catch (e) {
+      window.alert(String(e))
+      console.error(e)
+    }
+  })
+
+  emitter.on(keys.file.export, async () => {
+    try {
+      const currentFile = state.file.list[state.file.current]
+      const opt = {
+        landscape: false,
+        marginsType: 0,
+        printBackground: false,
+        printSelectionOnly: false,
+        pageSize: {
+          height: 257000,
+          width: 182000
+        }
+      }
+      const data = await fileio.pdf(opt)
+      const currentFilePath = path.parse(currentFile.path)
+      const defaultPath = path.format({
+        dir: currentFilePath.dir,
+        name: currentFilePath.name,
+        ext: '.pdf'
+      })
+      try {
+        console.log(defaultPath);
+        await fileio.save(data, {
+          defaultPath: defaultPath,
+          buttonLabel: 'Export',
+          filters: [
+            { name: 'PDF', extensions: ['pdf'] }
+          ]
+        })
+      } catch (e) {
+        if (e.message !== 'Canceled') {
+          throw e
+        }
       }
     } catch (e) {
       window.alert(String(e))

@@ -13,6 +13,7 @@ module.exports = {
     open: 'file:open',
     save: 'file:save',
     update: 'file:update',
+    export: 'file:export',
     hotReload: 'file:hot-reload'
   }
 }

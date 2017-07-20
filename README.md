@@ -2,7 +2,7 @@
 
 [![js-standard-style][0]][1]
 
-Tools for writing for printing. Currently supporting darwin and linux.
+Tools for writing for printing. Currently supporting macos and linux.
 
 ## Features
 
@@ -27,6 +27,14 @@ Start a local server at `localhost:9966`.
 ```
 $ yarn
 $ yarn start
+```
+
+## Packaging
+
+Create an executable binary for macos and linux.
+
+```
+$ yarn build
 ```
 
 ## Screenshot

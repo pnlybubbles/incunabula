@@ -3,16 +3,12 @@ const pify = (require('util').promisify || require('pify'))
 
 const open = (() => {
   if (isElectron) {
-    const { remote } = require('electron')
+    const { remote } = require((0, 'electron'))
     const { dialog } = remote
-    const showOpenDialog = () => new Promise((resolve, reject) => {
-      dialog.showOpenDialog({
-        properties: ['openFile'],
-        filters: [{
-          name: 'Markdown / Text',
-          extensions: ['md', 'txt']
-        }]
-      }, (files) => {
+    const showOpenDialog = (opt) => new Promise((resolve, reject) => {
+      dialog.showOpenDialog(remote.getCurrentWindow(), Object.assign({}, {
+        properties: ['openFile']
+      }, opt), (files) => {
         if (files) {
           resolve(files)
         } else {
@@ -21,10 +17,10 @@ const open = (() => {
       })
     })
 
-    return async () => {
+    return async (opt) => {
       let files = []
       try {
-        files = await showOpenDialog()
+        files = await showOpenDialog(opt)
       } catch (e) {
         return []
       }
@@ -44,9 +40,36 @@ const open = (() => {
   }
 })()
 
+const save = (() => {
+  if (isElectron) {
+    const { remote } = require((0, 'electron'))
+    const { dialog } = remote
+    const showSaveDialog = (opt) => new Promise((resolve, reject) => {
+      dialog.showSaveDialog(remote.getCurrentWindow(), opt, (files) => {
+        if (files) {
+          resolve(files)
+        } else {
+          reject(new Error('Canceled'))
+        }
+      })
+    })
+
+    return async (content, opt) => {
+      let path = null
+      path = await showSaveDialog(opt)
+      await write(path, content)
+      return path
+    }
+  } else {
+    return (cb) => {
+      throw new Error('Not implemented')
+    }
+  }
+})()
+
 const read = (() => {
   if (isElectron) {
-    const { remote } = require('electron')
+    const { remote } = require((0, 'electron'))
     const fs = remote.require('fs')
     const readFile = pify(fs.readFile)
 
@@ -62,7 +85,7 @@ const read = (() => {
 
 const write = (() => {
   if (isElectron) {
-    const { remote } = require('electron')
+    const { remote } = require((0, 'electron'))
     const fs = remote.require('fs')
     const writeFile = pify(fs.writeFile)
 
@@ -78,15 +101,40 @@ const write = (() => {
 
 const check = (() => {
   if (isElectron) {
-    const { remote } = require('electron')
+    const { remote } = require((0, 'electron'))
     const fs = remote.require('fs')
     const access = pify(fs.access)
 
     return async (path) => {
-      return access(path, fs.constants.R_OK | fs.constants.W_OK)
+      try {
+        await access(path, fs.constants.R_OK | fs.constants.W_OK)
+        return true
+      } catch (e) {
+        if (e.code === 'ENOENT') {
+          return false
+        } else {
+          throw e
+        }
+      }
     }
   } else {
     return (path) => {
+      throw new Error('Not supported')
+    }
+  }
+})()
+
+const pdf = (() => {
+  if (isElectron) {
+    const { remote } = require((0, 'electron'))
+    const webContents = remote.getCurrentWebContents()
+    const printToPDF = pify(webContents.printToPDF)
+
+    return async (opt) => {
+      return printToPDF(opt)
+    }
+  } else {
+    return (opt) => {
       throw new Error('Not supported')
     }
   }
@@ -102,8 +150,10 @@ const version = (() => {
 
 module.exports = {
   open,
+  save,
   read,
   write,
+  pdf,
   check,
   version
 }
