@@ -221,6 +221,7 @@ module.exports = (state, emitter) => {
       console.info(`Save file (${currentFile.path})`)
       await fileio.write(currentFile.path, currentFile.content)
       currentFile.lastLoad = currentFile.content
+      cache()
     }
   }
 }
