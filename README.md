@@ -26,7 +26,7 @@ Tools for writing for printing. Currently supporting macOS.
 Start a local server at `localhost:9966`.
 
 ```
-$ npm
+$ npm install
 $ npm start
 ```
 
@@ -35,7 +35,7 @@ $ npm start
 Create an executable binary for macOS.
 
 ```
-$ npm build
+$ npm run build
 ```
 
 ## Screenshot

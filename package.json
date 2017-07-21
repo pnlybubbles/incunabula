@@ -33,7 +33,7 @@
   "scripts": {
     "start": "electron .",
     "server": "budo index.js -lP -d .",
-    "build": "electron-packager . --platform=darwin --arch=x64 --overwrite",
+    "build": "electron-packager . --platform=darwin --arch=x64 --icon assets/icon.icns --overwrite",
     "test": "standard"
   }
 }
