@@ -14,6 +14,7 @@ module.exports = (report, emit) => {
           return elm
         })}
       </div>
+      <div class="label">WARNING</div>
     </div>
   `
 }
