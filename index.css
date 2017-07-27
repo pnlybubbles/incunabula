@@ -218,7 +218,9 @@
   }
 
   #viewer .sheet.hide {
-    display: none;
+    visibility: hidden;
+    position: absolute;
+    top: -100%;
   }
 
   #viewer .button {
@@ -286,15 +288,19 @@
 }
 
 #viewer .sheet {
+  --height: 257mm;
+  --width: 182mm;
+  --padding: 15mm;
   background-color: #fff;
-  height: 257mm;
-  width: 182mm;
+  height: var(--height);
+  width: var(--width);
+  padding: var(--padding);
   page-break-after: always;
-  padding: 60px;
   box-sizing: border-box;
   line-height: 1.5;
   letter-spacing: 0.05em;
   font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
+  overflow: hidden;
 }
 
 @media print {

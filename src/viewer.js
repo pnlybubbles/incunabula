@@ -23,7 +23,10 @@ module.exports = (state, emitter) => {
       width: 0,
       height: 0
     },
-    report: ''
+    report: '',
+    theme: {
+      name: 'default'
+    }
   }
 
   setInterval(() => {

@@ -1,0 +1,42 @@
+/* @import url('../../node_modules/github-markdown-css/github-markdown.css'); */
+@import url('../../node_modules/highlight.js/styles/github.css');
+
+.pages {
+  --color: #888;
+  counter-reset: chapter;
+}
+
+h1 {
+  font-size: 2.1em;
+  text-align: center;
+  /* border-top: solid 1px #000; */
+  /* border-bottom: solid 1px #000; */
+  padding: calc(var(--padding) + 1em) var(--padding) var(--padding);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 2em;
+  background-color: var(--color);
+  color: #fff;
+  width: calc(100% + 2 * var(--padding));
+  margin-left: calc(-1 * var(--padding));
+  margin-top: calc(-1 * var(--padding));
+}
+
+h1:before {
+  counter-increment: chapter;
+  content: counter(chapter);
+  --height: 1.2em;
+  display: block;
+  text-align: center;
+  font-size: 2em;
+  background-color: #fff;
+  color: var(--color);
+  font-weight: normal;
+  height: var(--height);
+  width: var(--height);
+  line-height: var(--height);
+  margin: 0 0 calc(var(--height) / 3) 0.1em;
+  font-family: HelveticaNeue-UltraLight;
+}
