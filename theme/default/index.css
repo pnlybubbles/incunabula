@@ -107,9 +107,31 @@
 }
 
 .markdown-body code {
-  background-color: #eee;
+  background-color: #f5f5f5;
   padding: 0.3em 0.6em 0.2em;
   font-size: 0.9em;
   border-radius: 0.3em;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body pre code {
+  box-sizing: border-box;
+  padding: 1.5em var(--padding);
+  width: var(--width);
+  border-radius: 0;
+  margin-left: calc(-1 * var(--padding));
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body tbody {
+  border-top: solid 2px #ccc;
+}
+
+.markdown-body table td,th {
+  border: solid 1px #ddd;
+  padding: 0.5em 0.8em 0.3em;
 }
