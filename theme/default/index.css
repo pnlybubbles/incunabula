@@ -3,10 +3,37 @@
 
 .pages {
   --color: #888;
+  --sub-color: #ddd;
   counter-reset: chapter;
+  counter-reset: page;
 }
 
-h1 {
+.markdown-body:not(.noprint)::after {
+  --hw: 2em;
+  counter-increment: page;
+  content: counter(page);
+  display: block;
+  position: absolute;
+  bottom: calc(var(--padding) - var(--hw));
+  background-color: var(--color);
+  color: #fff;
+  width: var(--hw);
+  height: var(--hw);
+  border-radius: 50%;
+  line-height: var(--hw);
+  text-align: center;
+  font-family: HelveticaNeue-UltraLight;
+}
+
+.markdown-body:not(.noprint):nth-child(odd)::after {
+  right: calc(var(--padding) - var(--hw));
+}
+
+.markdown-body:not(.noprint):nth-child(even)::after {
+  left: calc(var(--padding) - var(--hw));
+}
+
+.markdown-body h1 {
   font-size: 2.1em;
   text-align: center;
   /* border-top: solid 1px #000; */
@@ -24,7 +51,7 @@ h1 {
   margin-top: calc(-1 * var(--padding));
 }
 
-h1:before {
+.markdown-body h1:before {
   counter-increment: chapter;
   content: counter(chapter);
   --height: 1.2em;
@@ -39,4 +66,50 @@ h1:before {
   line-height: var(--height);
   margin: 0 0 calc(var(--height) / 3) 0.1em;
   font-family: HelveticaNeue-UltraLight;
+}
+
+.markdown-body h2 {
+  position: relative;
+  margin-bottom: 1em;
+}
+
+.markdown-body h2::after {
+  content: '';
+  display: block;
+  height: 0.2em;
+  width: 100%;
+  position: absolute;
+  bottom: -0.2em;
+  background-image: linear-gradient(
+    -45deg,
+    #fff 25%,
+    var(--sub-color) 25%, var(--sub-color) 50%,
+    #fff 50%, #fff 75%,
+    var(--sub-color) 75%, var(--sub-color)
+  );
+  background-size: 8px 8px;
+}
+
+.markdown-body h3 {
+  margin-top: 1.8em;
+}
+
+.markdown-body ul {
+  padding-left: 2em;
+}
+
+.markdown-body li {
+  margin: 0.4em 0;
+}
+
+.markdown-body li > p {
+  margin: 0;
+}
+
+.markdown-body code {
+  background-color: #eee;
+  padding: 0.3em 0.6em 0.2em;
+  font-size: 0.9em;
+  border-radius: 0.3em;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
