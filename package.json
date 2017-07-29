@@ -9,6 +9,7 @@
     "electron-default-menu": "^1.0.1",
     "font-awesome": "^4.7.0",
     "github-markdown-css": "^2.8.0",
+    "is-plain-object": "^2.0.4",
     "katex": "^0.7.1",
     "normalize.css": "^7.0.0",
     "pify": "^3.0.0",
