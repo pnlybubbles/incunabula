@@ -4,8 +4,7 @@
 .pages {
   --color: #888;
   --sub-color: #ddd;
-  counter-reset: chapter;
-  counter-reset: page;
+  counter-reset: chapter page;
 }
 
 .markdown-body:not(.noprint)::after {
