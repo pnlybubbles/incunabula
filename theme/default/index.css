@@ -9,7 +9,7 @@
 
 #viewer .markdown-body {
   font-family: 'Hiragino Mincho ProN', serif;
-  filter: grayscale(100%);
+  font-size: 3.3mm;
 }
 
 .markdown-body:not(.noprint)::after {
