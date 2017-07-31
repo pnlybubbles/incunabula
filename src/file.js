@@ -113,13 +113,20 @@ module.exports = (state, emitter) => {
       const isNewFile = currentFile.path === ''
       const filename = isNewFile ? 'New File' : path.basename(currentFile.path)
       if (isNewFile && currentFile.content === '') {
-        // empty and not edited yet
+        // empty and nothing changes
+        // not necessary to save
+      } else if (currentFile.content === currentFile.lastLoad) {
+        // nothing changes
+        // not necessary to save
       } else {
-        if (window.confirm(`Do you want to save the changes you made to ${filename}?\nCancel to discard changes.`)) {
+        if (window.confirm(`Do you want to save the changes you made to ${filename}?`)) {
           // save changes before close
           await save()
+        } else if (window.confirm('Discard changes?')) {
+          // discard changes
         } else {
-          // do not changes and discard changes
+          // cancel operation
+          return
         }
       }
       win.close()
