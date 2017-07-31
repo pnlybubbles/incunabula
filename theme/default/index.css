@@ -12,6 +12,10 @@
   font-size: 3.3mm;
 }
 
+.markdown-body {
+  position: relative;
+}
+
 .markdown-body:not(.noprint)::after {
   --hw: 2em;
   counter-increment: page;
@@ -165,4 +169,8 @@
 .markdown-body table td,th {
   border: solid 1px #ddd;
   padding: 0.5em 0.8em 0.3em;
+}
+
+.markdown-body img {
+  max-width: 90%;
 }

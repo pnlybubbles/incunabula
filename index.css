@@ -290,7 +290,7 @@
 #viewer .sheet {
   --height: 257mm;
   --width: 182mm;
-  --padding: 15mm;
+  --padding: 20mm;
   background-color: #fff;
   height: var(--height);
   width: var(--width);
