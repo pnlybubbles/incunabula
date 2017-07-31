@@ -7,18 +7,21 @@ const katex = require('rehype-katex')
 const stringify = require('rehype-stringify')
 const highlight = require('remark-highlight.js')
 const pageBreak = require('./page-break')
+const relativePath = require('./relative-path')
 
-const processor = remark()
-  .use(recommended)
-  .use(pageBreak)
-  .use(highlight)
-  .use(math)
-  .use(remark2rehype)
-  .use(katex)
-  .use(stringify)
-
-const translator = (str, cb) => {
-  processor.process(str, (err, file) => {
+const processor = (str, opt, cb) => {
+  remark()
+    .use(recommended)
+    .use(relativePath, {
+      base: opt.base
+    })
+    .use(pageBreak)
+    .use(highlight)
+    .use(math)
+    .use(remark2rehype)
+    .use(katex)
+    .use(stringify)
+    .process(str, (err, file) => {
     cb(
       // on electron, text decorator (like '[33m') will be revealed
       report(err || file).replace(/\[\d+m/g, ''),
@@ -28,4 +31,4 @@ const translator = (str, cb) => {
   })
 }
 
-module.exports = translator
+module.exports = processor
