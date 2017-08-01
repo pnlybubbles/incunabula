@@ -8,9 +8,15 @@ const stringify = require('rehype-stringify')
 const highlight = require('remark-highlight.js')
 const pageBreak = require('./page-break')
 const relativePath = require('./relative-path')
+const deepEqual = require('deep-equal')
+
+let cachedOpt = null
+let cachedProcessor = null
 
 const processor = (str, opt, cb) => {
-  remark()
+  let p = cachedProcessor
+  if (!deepEqual(cachedOpt, opt)) {
+    p = remark()
     .use(recommended)
     .use(relativePath, {
       base: opt.base
@@ -21,7 +27,10 @@ const processor = (str, opt, cb) => {
     .use(remark2rehype)
     .use(katex)
     .use(stringify)
-    .process(str, (err, file) => {
+    cachedProcessor = p
+    cachedOpt = opt
+  }
+  p.process(str, (err, file) => {
     cb(
       // on electron, text decorator (like '[33m') will be revealed
       report(err || file).replace(/\[\d+m/g, ''),
