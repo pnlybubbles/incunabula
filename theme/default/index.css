@@ -4,7 +4,7 @@
 .pages {
   --color: #888;
   --sub-color: #aaa;
-  counter-reset: page chapter;
+  counter-reset: page chapter nombre 2;
 }
 
 #viewer .markdown-body {
@@ -14,6 +14,17 @@
 
 .markdown-body {
   position: relative;
+}
+
+.markdown-body:not(.noprint)::before {
+  --size: 3mm;
+  counter-increment: nombre;
+  content: counter(nombre);
+  font-size: var(--size);
+  font-family: HelveticaNeue;
+  position: absolute;
+  right: var(--size);
+  bottom: var(--size);
 }
 
 .markdown-body:not(.noprint)::after {
