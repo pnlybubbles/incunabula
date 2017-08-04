@@ -288,9 +288,13 @@
 }
 
 #viewer .sheet {
-  --height: 257mm;
-  --width: 182mm;
-  --padding: 20mm;
+  --real-height: 257mm;
+  --real-width: 182mm;
+  --nuritashi: 3mm;
+  --blank: 10mm;
+  --height: calc(var(--real-height) + var(--nuritashi) * 2 + var(--blank) * 2);
+  --width: calc(var(--real-width) + var(--nuritashi) * 2 + var(--blank) * 2);
+  --padding: calc(20mm + var(--nuritashi) + var(--blank));
   background-color: #fff;
   height: var(--height);
   width: var(--width);
@@ -301,6 +305,50 @@
   letter-spacing: 0.05em;
   font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
   overflow: hidden;
+}
+
+#viewer .sheet .tombow {
+  --tombow-size: calc(var(--blank) * 0.8);
+  position: absolute;
+  width: var(--tombow-size);
+  height: var(--tombow-size);
+  box-sizing: border-box;
+}
+
+#viewer .sheet .tombow.left {
+  left: calc(var(--blank) + var(--nuritashi) - var(--tombow-size));
+  border-right: solid 1px #000;
+}
+
+#viewer .sheet .tombow.right {
+  right: calc(var(--blank) + var(--nuritashi) - var(--tombow-size));
+  border-left: solid 1px #000;
+}
+
+#viewer .sheet .tombow.top {
+  top: calc(var(--blank) + var(--nuritashi) - var(--tombow-size));
+  border-bottom: solid 1px #000;
+}
+
+#viewer .sheet .tombow.bottom {
+  bottom: calc(var(--blank) + var(--nuritashi) - var(--tombow-size));
+  border-top: solid 1px #000;
+}
+
+#viewer .sheet .tombow.with-left {
+  left: calc(var(--blank) - var(--tombow-size));
+}
+
+#viewer .sheet .tombow.with-right {
+  right: calc(var(--blank) - var(--tombow-size));
+}
+
+#viewer .sheet .tombow.with-top {
+  top: calc(var(--blank) - var(--tombow-size));
+}
+
+#viewer .sheet .tombow.with-bottom {
+  bottom: calc(var(--blank) - var(--tombow-size));
 }
 
 @media print {
