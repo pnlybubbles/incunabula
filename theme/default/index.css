@@ -43,11 +43,11 @@
 }
 
 .markdown-body:not(.noprint):nth-child(odd)::after {
-  right: calc(var(--padding) - var(--hw));
+  left: calc(var(--padding) - var(--hw));
 }
 
 .markdown-body:not(.noprint):nth-child(even)::after {
-  left: calc(var(--padding) - var(--hw));
+  right: calc(var(--padding) - var(--hw));
 }
 
 .markdown-body h1 {
