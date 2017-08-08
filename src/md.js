@@ -14,6 +14,7 @@ const processor = remark()
   .use(pageBreak)
   .use(remarkCustomBlocks, {
     toc: 'toc'
+    colophon: 'colophon'
   })
   .use(highlight)
   .use(math)

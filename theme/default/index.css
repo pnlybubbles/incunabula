@@ -199,3 +199,53 @@
   width: 100%;
 }
 
+.markdown-body .colophon {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+
+.markdown-body .colophon p {
+  margin: 0.3em 0;
+}
+
+.markdown-body .colophon p:first-child {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  border-bottom: solid 1px #000;
+  padding-bottom: 0.5em;
+}
+
+.markdown-body .toc {
+}
+
+.markdown-body .toc li p {
+  margin: 1em 0;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.15);
+}
+
+.markdown-body .toc > ol {
+  font-size: 1.5em;
+  margin: 1em 0 0;
+}
+
+.markdown-body .toc > ol ol {
+  font-size: 0.7em;
+}
+
+.markdown-body .toc a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 800;
+  float: right;
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic Std';
+}
+
+.markdown-body .toc::before {
+  content: '目次';
+  font-size: 2.5em;
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic Std';
+  font-weight: 500;
+}
