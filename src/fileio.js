@@ -1,4 +1,4 @@
-const isElectron = typeof process !== 'undefined' && process.title !== 'browser'
+const isElectron = require('./is-electron')
 const pify = (require('util').promisify || require('pify'))
 
 const open = (() => {

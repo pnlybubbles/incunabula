@@ -1,5 +1,6 @@
 const html = require('choo/html')
 const keys = require('../src/keys')
+const isElectron = require('../src/is-electron')
 
 module.exports = (state, emit) => {
   return html`
@@ -30,7 +31,9 @@ module.exports = (state, emit) => {
 
   function load (e) {
     resize(e)
-    emit(keys.file.hotReload)
+    if (!isElectron) {
+      emit(keys.file.hotReload)
+    }
   }
 
   function resize (e) {

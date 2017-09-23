@@ -18,5 +18,7 @@ module.exports = {
     export: 'file:export',
     new: 'file:new',
     hotReload: 'file:hot-reload'
-  }
+  },
+  close: 'close',
+  quit: 'quit'
 }
