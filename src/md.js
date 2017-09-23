@@ -6,19 +6,36 @@ const remark2rehype = require('remark-rehype')
 const katex = require('rehype-katex')
 const stringify = require('rehype-stringify')
 const highlight = require('remark-highlight.js')
+const remarkCustomBlocks = require('remark-custom-blocks')
 const pageBreak = require('./page-break')
+const relativePath = require('./relative-path')
+const deepEqual = require('deep-equal')
 
-const processor = remark()
-  .use(recommended)
-  .use(pageBreak)
-  .use(highlight)
-  .use(math)
-  .use(remark2rehype)
-  .use(katex)
-  .use(stringify)
+let cachedOpt = null
+let cachedProcessor = null
 
-const translator = (str, cb) => {
-  processor.process(str, (err, file) => {
+const processor = (str, opt, cb) => {
+  let p = cachedProcessor
+  if (!deepEqual(cachedOpt, opt)) {
+    p = remark()
+    .use(recommended)
+    .use(relativePath, {
+      base: opt.base
+    })
+    .use(pageBreak)
+    .use(remarkCustomBlocks, {
+      toc: 'toc',
+      colophon: 'colophon'
+    })
+    .use(highlight)
+    .use(math)
+    .use(remark2rehype)
+    .use(katex)
+    .use(stringify)
+    cachedProcessor = p
+    cachedOpt = opt
+  }
+  p.process(str, (err, file) => {
     cb(
       // on electron, text decorator (like '[33m') will be revealed
       report(err || file).replace(/\[\d+m/g, ''),
@@ -28,4 +45,4 @@ const translator = (str, cb) => {
   })
 }
 
-module.exports = translator
+module.exports = processor

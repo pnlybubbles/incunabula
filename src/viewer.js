@@ -1,6 +1,7 @@
 const md = require('./md')
 const keys = require('./keys')
 const domify = require('domify')
+const path = require('path')
 
 module.exports = (state, emitter) => {
   state.viewer = {
@@ -23,13 +24,20 @@ module.exports = (state, emitter) => {
       width: 0,
       height: 0
     },
-    report: ''
+    report: '',
+    theme: {
+      name: 'default'
+    }
   }
 
   setInterval(() => {
     if (state.editor.text !== state.viewer.text) {
       state.viewer.text = state.editor.text
-      md(state.viewer.text, (report, htmlString, data) => {
+      const currentFile = state.file.list[state.file.current]
+      const opt = {
+        base: path.dirname(currentFile.path)
+      }
+      md(state.viewer.text, opt, (report, htmlString, data) => {
         if (/warning/.test(report)) {
           console.warn(report)
         } else {

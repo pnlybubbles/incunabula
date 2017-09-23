@@ -1,9 +1,20 @@
 const html = require('choo/html')
 const keys = require('../src/keys')
+const isElectron = require('../src/is-electron')
 
 module.exports = (state, emit) => {
   return html`
-    <body onresize=${resize} onload=${load}>
+    <body
+      onresize=${resize}
+      onload=${load}
+      ondrop=${drop}
+      ondrag=${drop}
+      ondragenter=${drop}
+      ondragover=${drop}
+      ondragleave=${drop}
+      ondragstart=${drop}
+      ondragend=${drop}
+    >
       <div id="split">
         ${require('./editor')(state.editor, emit)}
         ${require('./viewer')(state.viewer, emit)}
@@ -20,7 +31,9 @@ module.exports = (state, emit) => {
 
   function load (e) {
     resize(e)
-    emit(keys.file.hotReload)
+    if (!isElectron) {
+      emit(keys.file.hotReload)
+    }
   }
 
   function resize (e) {
@@ -28,5 +41,9 @@ module.exports = (state, emit) => {
       height: window.innerHeight,
       width: window.innerWidth
     })
+  }
+
+  function drop (e) {
+    e.preventDefault()
   }
 }

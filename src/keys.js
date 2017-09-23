@@ -1,7 +1,9 @@
 module.exports = {
   editor: {
     update: 'editor:update',
-    cursor: 'editor:cursor'
+    cursor: 'editor:cursor',
+    hover: 'editor:hover',
+    drop: 'editor:drop'
   },
   viewer: {
     load: 'viewer:load',
@@ -16,5 +18,7 @@ module.exports = {
     export: 'file:export',
     new: 'file:new',
     hotReload: 'file:hot-reload'
-  }
+  },
+  close: 'close',
+  quit: 'quit'
 }

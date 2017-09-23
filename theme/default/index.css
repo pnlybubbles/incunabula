@@ -1,0 +1,251 @@
+/* @import url('../../node_modules/github-markdown-css/github-markdown.css'); */
+@import url('../../node_modules/highlight.js/styles/github.css');
+
+.pages {
+  --color: #888;
+  --sub-color: #aaa;
+  counter-reset: page chapter nombre 2;
+}
+
+#viewer .markdown-body {
+  font-family: 'Hiragino Mincho ProN', serif;
+  font-size: 3.3mm;
+}
+
+.markdown-body {
+  position: relative;
+}
+
+.markdown-body:not(.noprint)::before {
+  --size: 3mm;
+  counter-increment: nombre;
+  content: counter(nombre);
+  font-size: var(--size);
+  font-family: HelveticaNeue;
+  position: absolute;
+  right: var(--size);
+  bottom: var(--size);
+}
+
+.markdown-body:not(.noprint)::after {
+  --hw: 2em;
+  counter-increment: page;
+  content: counter(page);
+  display: block;
+  position: absolute;
+  bottom: calc(var(--padding) - var(--hw));
+  color: #000;
+  width: var(--hw);
+  height: var(--hw);
+  line-height: var(--hw);
+  text-align: center;
+  font-family: HelveticaNeue-Light;
+}
+
+.markdown-body:not(.noprint):nth-child(odd)::after {
+  left: calc(var(--padding) - var(--hw));
+}
+
+.markdown-body:not(.noprint):nth-child(even)::after {
+  right: calc(var(--padding) - var(--hw));
+}
+
+.markdown-body h1 {
+  font-size: 2.5em;
+  text-align: center;
+  /* border-top: solid 1px #000; */
+  padding-bottom: 0.5em;
+  border-bottom: solid 4px #000;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1em;
+  font-weight: 500;
+}
+
+.markdown-body h1:before {
+  counter-increment: chapter;
+  content: counter(chapter);
+  --height: 1.2em;
+  display: block;
+  text-align: center;
+  font-size: 1.5em;
+  color: #000;
+  border: solid 4px #000;
+  font-weight: normal;
+  height: var(--height);
+  width: var(--height);
+  line-height: var(--height);
+  margin: 0 0 calc(var(--height) / 3) 0.1em;
+  font-family: HelveticaNeue-Light;
+}
+
+.markdown-body h2 {
+  font-weight: 500;
+}
+.markdown-body h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+.markdown-body h1, h2, h3, h4, h5, h6 {
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic Std';
+}
+
+.markdown-body h2 {
+  position: relative;
+  margin-bottom: 1.5em;
+  font-size: 2em;
+}
+
+.markdown-body h2::after {
+  content: '';
+  display: block;
+  height: 0.2em;
+  width: 100%;
+  position: absolute;
+  bottom: -0.4em;
+  background-image: linear-gradient(
+    -45deg,
+    #fff 25%,
+    var(--sub-color) 25%, var(--sub-color) 50%,
+    #fff 50%, #fff 75%,
+    var(--sub-color) 75%, var(--sub-color)
+  );
+  background-size: 8px 8px;
+}
+
+.markdown-body h3 {
+  margin-top: 1.3em;
+  margin-bottom: 0.6em;
+}
+
+.markdown-body strong {
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic Std';
+  font-weight: 600;
+}
+
+.markdown-body p {
+  margin: 0.6em 0;
+}
+
+.markdown-body ul {
+  padding-left: 2em;
+  margin: 0.6em 0;
+}
+
+.markdown-body ul ul {
+  margin: 0.4em 0;
+}
+
+.markdown-body li {
+  margin: 0.4em 0;
+}
+
+.markdown-body li > p {
+  margin: 0;
+}
+
+.markdown-body code {
+  background-color: #f5f5f5;
+  padding: 0.3em 0.6em 0.2em;
+  font-size: 0.9em;
+  border-radius: 0.3em;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body pre code {
+  box-sizing: border-box;
+  padding: 1.5em var(--padding);
+  width: var(--width);
+  border-radius: 0;
+  margin-left: calc(-1 * var(--padding));
+}
+
+.markdown-body blockquote {
+  border-left: solid 6px rgba(0, 0, 0, 0.1);
+  padding: 0.1em 1em;
+  margin: 0.4em 0;
+  color: rgba(0, 0, 0, 0.8)
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic Std';
+  font-weight: 300;
+}
+
+.markdown-body tbody {
+  border-top: solid 2px #ccc;
+}
+
+.markdown-body th {
+  font-weight: 600;
+}
+
+.markdown-body table td,th {
+  border: solid 1px #ddd;
+  padding: 0.5em 0.8em 0.3em;
+}
+
+.markdown-body img {
+  width: 70%;
+  margin: 0 auto;
+  display: block;
+}
+
+.markdown-body img[alt=large] {
+  width: 100%;
+}
+
+.markdown-body .colophon {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+
+.markdown-body .colophon p {
+  margin: 0.3em 0;
+}
+
+.markdown-body .colophon p:first-child {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+  border-bottom: solid 1px #000;
+  padding-bottom: 0.5em;
+}
+
+.markdown-body .toc {
+}
+
+.markdown-body .toc li p {
+  margin: 1em 0;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.15);
+}
+
+.markdown-body .toc > ol {
+  font-size: 1.5em;
+  margin: 1em 0 0;
+}
+
+.markdown-body .toc > ol ol {
+  font-size: 0.7em;
+}
+
+.markdown-body .toc a {
+  text-decoration: none;
+  color: #000;
+  font-weight: 800;
+  float: right;
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic Std';
+}
+
+.markdown-body .toc::before {
+  content: '目次';
+  font-size: 2.5em;
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic Std';
+  font-weight: 500;
+}

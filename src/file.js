@@ -1,7 +1,9 @@
 const keys = require('./keys')
 const fileio = require('./fileio')
+const win = require('./window')
 const path = require('path')
 const localStorage = window.localStorage
+const isElectron = typeof process !== 'undefined' && process.title !== 'browser'
 
 module.exports = (state, emitter) => {
   state.file = {
@@ -15,7 +17,7 @@ module.exports = (state, emitter) => {
   }
 
   setInterval(() => {
-    if (!state.file.cached) {
+  if (!state.file.cached) {
       cache()
     }
   }, 5000)
@@ -105,17 +107,51 @@ module.exports = (state, emitter) => {
     }
   })
 
+  emitter.on(keys.close, async () => {
+    try {
+      const currentFile = state.file.list[state.file.current]
+      const isNewFile = currentFile.path === ''
+      const filename = isNewFile ? 'New File' : path.basename(currentFile.path)
+      if (isNewFile && currentFile.content === '') {
+        // empty and nothing changes
+        // not necessary to save
+      } else if (currentFile.content === currentFile.lastLoad) {
+        // nothing changes
+        // not necessary to save
+      } else {
+        if (window.confirm(`Do you want to save the changes you made to ${filename}?`)) {
+          // save changes before close
+          await save()
+        } else if (window.confirm('Discard changes?')) {
+          // discard changes
+        } else {
+          // cancel operation
+          return
+        }
+      }
+      win.close()
+    } catch (e) {
+      error(e)
+    }
+  })
+
   emitter.on(keys.file.export, async () => {
     try {
       const currentFile = state.file.list[state.file.current]
+      const config = {
+        height: 257000,
+        width: 182000,
+        nuritashi: 3000,
+        blank: 10000
+      }
       const opt = {
         landscape: false,
         marginsType: 0,
         printBackground: true,
         printSelectionOnly: false,
         pageSize: {
-          height: 257000,
-          width: 182000
+          height: config.height + config.nuritashi * 2+ config.blank * 2,
+          width: config.width + config.nuritashi * 2+ config.blank * 2
         }
       }
       const data = await fileio.pdf(opt)
@@ -182,7 +218,7 @@ module.exports = (state, emitter) => {
 
   async function save () {
     const currentFile = state.file.list[state.file.current]
-    if (!currentFile.path) {
+    if (currentFile.path === '') {
       // path is empty, create new
       console.info(`New file`)
       const newPath = await fileio.save(currentFile.content, {
