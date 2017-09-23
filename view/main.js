@@ -3,7 +3,17 @@ const keys = require('../src/keys')
 
 module.exports = (state, emit) => {
   return html`
-    <body onresize=${resize} onload=${load}>
+    <body
+      onresize=${resize}
+      onload=${load}
+      ondrop=${drop}
+      ondrag=${drop}
+      ondragenter=${drop}
+      ondragover=${drop}
+      ondragleave=${drop}
+      ondragstart=${drop}
+      ondragend=${drop}
+    >
       <div id="split">
         ${require('./editor')(state.editor, emit)}
         ${require('./viewer')(state.viewer, emit)}
@@ -28,5 +38,9 @@ module.exports = (state, emit) => {
       height: window.innerHeight,
       width: window.innerWidth
     })
+  }
+
+  function drop (e) {
+    e.preventDefault()
   }
 }
