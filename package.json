@@ -16,6 +16,7 @@
     "rehype-katex": "^1.0.1",
     "rehype-stringify": "^3.0.0",
     "remark": "^7.0.1",
+    "remark-custom-blocks": "^1.0.2",
     "remark-highlight.js": "^5.0.0",
     "remark-html": "^6.0.1",
     "remark-math": "^1.0.0",
@@ -25,7 +26,7 @@
     "vfile-reporter": "^3.1.0"
   },
   "devDependencies": {
-    "budo": "^10.0.3",
+    "budo": "^10.0.4",
     "electron-packager": "^8.7.2",
     "electron-prebuilt": "^1.4.13",
     "standard": "^10.0.2"

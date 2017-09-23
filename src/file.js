@@ -138,14 +138,20 @@ module.exports = (state, emitter) => {
   emitter.on(keys.file.export, async () => {
     try {
       const currentFile = state.file.list[state.file.current]
+      const config = {
+        height: 257000,
+        width: 182000,
+        nuritashi: 3000,
+        blank: 10000
+      }
       const opt = {
         landscape: false,
         marginsType: 0,
         printBackground: true,
         printSelectionOnly: false,
         pageSize: {
-          height: 257000,
-          width: 182000
+          height: config.height + config.nuritashi * 2+ config.blank * 2,
+          width: config.width + config.nuritashi * 2+ config.blank * 2
         }
       }
       const data = await fileio.pdf(opt)

@@ -4,6 +4,8 @@ const keys = require('../src/keys')
 module.exports = (viewer, emit) => {
   return html`
     <div id="viewer" class="main">
+      <link rel="stylesheet" href="theme/${viewer.theme.name}/index.css">
+      <script type="text/javascript" src="theme/${viewer.theme.name}/index.js"></script>
       <style>
         @media screen {
           #viewer .sheet {
@@ -16,14 +18,16 @@ module.exports = (viewer, emit) => {
       <div class="noprint button left" onclick=${page(-1)}></div>
       <div class="noprint button right" onclick=${page(1)}></div>
       <div class="noprint page-number">${viewer.currentPage.number + 1}</div>
-      <section
-        class="sheet noprint ${viewer.sheet.load ? 'hide' : ''}"
-        onload=${load}
-      >
-      </section>
-      ${viewer.page.map((v, i) => {
-        return require('./page')(v, viewer.currentPage.number === i, emit)
-      })}
+      <div class="pages">
+        <section
+          class="sheet noprint ${viewer.sheet.load ? 'hide' : ''}"
+          onload=${load}
+        >
+        </section>
+        ${viewer.page.map((v, i) => {
+          return require('./page')(v, viewer.currentPage.number === i, emit)
+        })}
+      </div>
     </div>
   `
 

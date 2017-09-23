@@ -6,11 +6,16 @@ const remark2rehype = require('remark-rehype')
 const katex = require('rehype-katex')
 const stringify = require('rehype-stringify')
 const highlight = require('remark-highlight.js')
+const remarkCustomBlocks = require('remark-custom-blocks')
 const pageBreak = require('./page-break')
 
 const processor = remark()
   .use(recommended)
   .use(pageBreak)
+  .use(remarkCustomBlocks, {
+    toc: 'toc'
+    colophon: 'colophon'
+  })
   .use(highlight)
   .use(math)
   .use(remark2rehype)
